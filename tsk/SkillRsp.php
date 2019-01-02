@@ -38,10 +38,10 @@ function build_skill_success_response($config, $speech, $outText = null, $should
 	return array("header" => $config['header'], "body" => $skillBody);
 }
 
-function build_skill_failed_response($config, $error_code, $shouldEndSession = false)
+function build_skill_failed_response($config, $error_code, $shouldEndSession = true)
 {
 	$errorSpeechMap = $config['errorSpeechMap'];
-	return build_skill_success_response($config, $errorSpeechMap[$error_code], $shouldEndSession);
+	return build_skill_success_response($config, $errorSpeechMap[$error_code], null, $shouldEndSession);
 }
 
 function build_slot_elicit_failed_response($config, $speech, $slot_name, $updatedIntent, $outText = null)

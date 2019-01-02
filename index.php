@@ -8,7 +8,7 @@ require_once "handler.php";
 
 // main 函数
 function main()
-{
+{ 
     ignore_user_abort(true); // 后台运行
     set_time_limit(0); // 取消脚本运行时间的超时上限
 
@@ -32,6 +32,7 @@ function main()
     if (!isset($result) || !isset($result["header"]) || !isset($result["body"])) {
         header('HTTP/1.1 404 Not Found');
         header("status: 404 Not Found");
+        echo "404 Not Found";
         return;
     }
 

@@ -1,0 +1,13 @@
+<?php
+require_once "game/GameConst.php";
+
+// ÓÎÏ·´æµµÊý¾Ý
+class GameData
+{
+    public function __construct($data)
+    {
+
+    }
+
+}
+?>
