@@ -1,10 +1,10 @@
 <?php
-require_once "common/Session.php";
-require_once "common/Context.php";
-require_once "request/LaunchRequest.php";
-require_once "request/IntentRequest.php";
-require_once "request/SessionEndedRequest.php";
-require_once "request/RetryIntentRequest.php";
+require_once dirname(__FILE__).'/'."common/Session.php";
+require_once dirname(__FILE__).'/'."common/Context.php";
+require_once dirname(__FILE__).'/'."request/LaunchRequest.php";
+require_once dirname(__FILE__).'/'."request/IntentRequest.php";
+require_once dirname(__FILE__).'/'."request/SessionEndedRequest.php";
+require_once dirname(__FILE__).'/'."request/RetryIntentRequest.php";
 
 class Skill{
 	public $version;

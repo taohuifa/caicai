@@ -1,7 +1,7 @@
 <?php
-require_once "Application.php";
-require_once "Device.php";
-require_once "User.php";
+require_once dirname(__FILE__).'/'."Application.php";
+require_once dirname(__FILE__).'/'."Device.php";
+require_once dirname(__FILE__).'/'."User.php";
 class System{
 	public $application;
 	public $device;

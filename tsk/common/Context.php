@@ -1,5 +1,5 @@
 <?php
-require_once "System.php";
+require_once dirname(__FILE__).'/'."System.php";
 class Context{
 	public $System;
 	public $AudioPlayer;

@@ -1,9 +1,9 @@
 <?php
-require_once "response/Response.php";
-require_once "response/OutputSpeech.php";
-require_once "directive/DisplayRenderTemplate.php";
-require_once "directive/DialogElicitSlot.php";
-require_once "entity/TextContentObj.php";
+require_once dirname(__FILE__).'/'."response/Response.php";
+require_once dirname(__FILE__).'/'."response/OutputSpeech.php";
+require_once dirname(__FILE__).'/'."directive/DisplayRenderTemplate.php";
+require_once dirname(__FILE__).'/'."directive/DialogElicitSlot.php";
+require_once dirname(__FILE__).'/'."entity/TextContentObj.php";
 class SkillRsp
 {
 	public $version;

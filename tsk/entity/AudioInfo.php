@@ -1,5 +1,5 @@
 <?php
-require_once "ImageObj.php";
+require_once dirname(__FILE__).'/'."ImageObj.php";
 class AudioInfo{
 	public $stream;
 	public $info;

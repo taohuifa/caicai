@@ -1,6 +1,6 @@
 <?php
-require_once "Request.php";
-require_once "SessionEndedError.php";
+require_once dirname(__FILE__).'/'."Request.php";
+require_once dirname(__FILE__).'/'."SessionEndedError.php";
 class SessionEndedRequest extends Request{
 	public $reason;
 	public $error;

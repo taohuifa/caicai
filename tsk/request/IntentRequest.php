@@ -1,6 +1,6 @@
 <?php
-require_once "Request.php";
-require_once(dirname(__FILE__).'/'."../intent/Intent.php");
+require_once dirname(__FILE__).'/'."Request.php";
+require_once dirname(__FILE__).'/'."../intent/Intent.php";
 class IntentRequest extends Request{
 	public $dialogState;
 	public $intent;

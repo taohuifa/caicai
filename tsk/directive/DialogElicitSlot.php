@@ -1,5 +1,5 @@
 <?php
-require_once "Directive.php";
+require_once dirname(__FILE__).'/'."Directive.php";
 class DialogElicitSlot extends Directive{
 	public $slotToElicit;
 	public $updatedIntent;

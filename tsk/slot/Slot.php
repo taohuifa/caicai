@@ -1,5 +1,5 @@
 <?php
-require_once "SlotValue.php";
+require_once dirname(__FILE__).'/'."SlotValue.php";
 class Slot{
 	public $name;
 	public $confirmationStatus;
