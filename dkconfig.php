@@ -114,7 +114,8 @@ $config['dkconfig'] = array(
     "errorSpeechMap" => array(
         "signInvalid" => array("type" => "PlainText", "text" => "对不起，我不是很理解你说的。"),
         "skillIdInvalid" => array("type" => "PlainText", "text" => "对不起，我不是很理解你说的。"),
-        "exception" => array("type" => "PlainText", "text" => "对不起，我不是很理解你说的。")
+        "exception" => array("type" => "PlainText", "text" => "对不起，我不是很理解你说的。"),
+        "error" => array("type" => "PlainText", "text" => "哎呀, 服务器宕机了, 呵呵呵。"),
     ),
     "header" => array('Content-Type' => "application/json;charset=UTF-8"),
     "successDirective" => array(

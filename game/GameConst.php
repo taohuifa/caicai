@@ -1,13 +1,14 @@
 <?php
 
 // 游戏状态
+define("STATE_NULL", 0);    // 无状态
+define("STATE_SELECT", 1);   // 选择模式
+define("STATE_START", 2);   // 开始
+define("STATE_PLAYING", 3); // 游戏中
+define("STATE_EXIT", 4);    // 退出
+
+// 游戏状态
 define("GAMESTATE_NULL", 0);    // 无状态
-define("GAMESTATE_SELECT", 1);   // 选择模式
-define("GAMESTATE_START", 2);   // 开始
-define("GAMESTATE_PLAYIN", 3); // 游戏中
-define("GAMESTATE_EXIT", 4);    // 退出
-
-
 
 // 游戏类型
 define("GAMETYPE_NULL", 0);
