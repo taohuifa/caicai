@@ -1,7 +1,5 @@
 <?php
-// require_once "System.php";   // 这个php限制读取了
-require_once "SystemA.php";
-
+require_once dirname(__FILE__).'/'."System.php";
 class Context{
 	public $System;
 	public $AudioPlayer;

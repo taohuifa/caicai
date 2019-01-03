@@ -1,5 +1,5 @@
 <?php
-require_once "game/GameConst.php";
+require_once dirname(__FILE__).'/'."GameConst.php";
 
 // 语言
 class Language

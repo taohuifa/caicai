@@ -1,6 +1,6 @@
 <?php
-require_once "Request.php";
-require_once "RetryMeta.php";
+require_once dirname(__FILE__).'/'."Request.php";
+require_once dirname(__FILE__).'/'."RetryMeta.php";
 class RetryIntentRequest extends Request{
 	public $dialogState;
 	public $sourceIntent;

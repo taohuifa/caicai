@@ -2,9 +2,9 @@
 // phpinfo();
 // header("Content-Type: text/html; charset=utf-8");
 
-require_once "config.php";
-require_once "common.php";
-require_once "handler.php";
+require_once dirname(__FILE__).'/'."config.php";
+require_once dirname(__FILE__).'/'."common.php";
+require_once dirname(__FILE__).'/'."handler.php";
 
 // main 函数
 function main()

@@ -1,11 +1,11 @@
 <?php
-require_once "tsk/Skill.php";
-require_once "tsk/SkillRsp.php";
-require_once "config.php";
-require_once "dkconfig.php";
-require_once "game/GameConst.php";
-require_once "game/GameCache.php";
-require_once "game/Language.php";
+require_once dirname(__FILE__).'/'."tsk/Skill.php";
+require_once dirname(__FILE__).'/'."tsk/SkillRsp.php";
+require_once dirname(__FILE__).'/'."config.php";
+require_once dirname(__FILE__).'/'."dkconfig.php";
+require_once dirname(__FILE__).'/'."game/GameConst.php";
+require_once dirname(__FILE__).'/'."game/GameCache.php";
+require_once dirname(__FILE__).'/'."game/Language.php";
 
 // 加载游戏代码
 require_once "csz/handler.php";
