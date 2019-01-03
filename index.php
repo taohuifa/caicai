@@ -8,9 +8,10 @@ require_once "handler.php";
 
 // main 函数
 function main()
-{ 
+{
     ignore_user_abort(true); // 后台运行
     set_time_limit(0); // 取消脚本运行时间的超时上限
+    srand((float)microtime() * 1000000); // 随机种子
 
     global $config;
     // var_dump($config);

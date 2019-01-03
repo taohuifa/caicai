@@ -36,6 +36,8 @@ function request_hander($body, $request_type, $cache)
 	if ($request_type != "SessionEndedRequest") {
 		// 通用退出
 		if ($body->request->queryText == "不玩了") {
+			$cache->state == STATE_NULL;
+			
 			log_debug("exit game 1");
 			$successSpeach = array(
 				"type" => "PlainText",
@@ -175,8 +177,8 @@ function request($headers, $body)
 {
 	global $config;
     // var_dump($config["debug"]);
-	if ($config["debug"]) {
-    	// 测试代码
+	if ($config["debug"] && (!isset($body) || $body == null || $body == "")) {
+    	// 测试代码, 读取上次请求内容
 		$request_file = read_file("test_request.txt");
 		if ($request_file != "") {
 			$body = $request_file;
@@ -188,6 +190,11 @@ function request($headers, $body)
 	if (!isset($body) || $body == null || $body == "") {
 		log_error("no body! ");
 		return null;
+	}
+	
+	// 保存这次请求内容
+	if ($config["debug"]) {
+		write_file("test_request.txt", $body);
 	}
     
     // 请求内容json解析
@@ -210,6 +217,18 @@ function request($headers, $body)
 	session_id($body_json->context->System->device->deviceId);
 	session_start();
 	$cache_str = isset($_SESSION['cache']) ? $_SESSION['cache'] : "";
+	
+	// 检测超时
+	$prev_time = isset($_SESSION['prev_time']) ? $_SESSION['prev_time'] : 0;
+	$now_time = time();
+	$dt = $now_time - $prev_time;
+	if ($dt > 15) {
+		log_debug("timeout clean cache! " . $dt . "(" . $prev_time . "/" . $now_time . ") ");
+		$cache_str = "";	// 清除缓存
+	}
+	$_SESSION['prev_time'] = $now_time;
+	
+	// 解析缓存
 	$cache = new GameCache(json_decode($cache_str));
 	log_info("game cache read: " . $cache_str);
 	

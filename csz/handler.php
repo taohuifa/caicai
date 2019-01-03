@@ -8,7 +8,7 @@ define("GAMESTATE_CSZ_PLAY", 1);    // 问答
 // 题库
 $csz_problem = array(
     array(
-        "problem" => "你觉得你帅吗?",
+        "problem" => "你觉得你帅吗 ",
         "selectItems" => array(
             "帅", "不帅",
         ),
@@ -16,7 +16,7 @@ $csz_problem = array(
     ),
 
     array(
-        "problem" => "你觉得你丑吗?",
+        "problem" => "你觉得你丑吗 ",
         "selectItems" => array(
             "丑", "很丑", "灰常丑",
         ),
@@ -28,27 +28,36 @@ $csz_problem = array(
 function csz_next_problem($body, $request_type, $cache, $problem_index)
 {
     global $config;
+    global $csz_problem;
     $dkconfig = $config['dkconfig'];
     // 随机问题
     $problem = $csz_problem[$problem_index];
-    $cache->csz_problem_index = $problem_index;
-      
-      // 生成问题
-    $text = $problem["problem"];
-    for ($i = 1; $i < count($problem["selectItems"]); $i++) {
-        $text = $text . " 选项" . $i . " " . $problem["selectItems"][$i] . " ";
+    if ($problem == null) {
+        log_error("no find problem by index! index=" . $problem_index . '/' . count($csz_problem));
+        return build_skill_failed_response($dkconfig, "error", true);
     }
+    $cache->csz_problem_index = $problem_index;
+    log_debug("csz_next_problem index: " . $problem_index . '/' . count($csz_problem));
+      
+    // 生成问题
+    $text = $problem["problem"];
+    for ($i = 0; $i < count($problem["selectItems"]); $i++) {
+        $text = $text . " 选项" . ($i + 1) . " " . $problem["selectItems"][$i] . "";
+    }
+    log_debug("csz_next_problem 1 " . $text);
       
       // 开始文档 
     $speach = array(
         "type" => "PlainText",
-        "text" => $text,
+        // "text" => $text,
+        "text" => $problem["problem"],
     );
-    $text = array(
+    $outText = array(
         'title' => "",		//显示标题
-        'description' => $text, // 显示内容
+        // 'description' => $text, // 显示内容
+        "description" => $problem["problem"],
     );
-    return build_skill_success_response($dkconfig, $speach, $text, false);
+    return build_skill_success_response($dkconfig, $speach, $outText, false);
 }
 
 // 猜数字游戏接口
@@ -56,6 +65,7 @@ function request_game_hander_csz($body, $request_type, $cache)
 {
     log_debug("request_game_hander_csz");
     global $config;
+    global $csz_problem;
     $dkconfig = $config['dkconfig'];
     
     // 检测游戏状态
@@ -64,14 +74,14 @@ function request_game_hander_csz($body, $request_type, $cache)
         $cache->gameState = GAMESTATE_CSZ_PLAY;
         
         // 开始第一题
-        $r = rand(0, count($csz_problem));
+        $r = rand(0, count($csz_problem) - 1);
         return csz_next_problem($body, $request_type, $cache, $r);
     } else if ($cache->state == STATE_PLAYING) {
     
         // 提取问题
         if ($cache->csz_problem_index <= 0) {
             // 下一题
-            $r = rand(0, count($csz_problem));
+            $r = rand(0, count($csz_problem) - 1);
             return csz_next_problem($body, $request_type, $cache, $r);
         }
         
@@ -107,7 +117,7 @@ function request_game_hander_csz($body, $request_type, $cache)
             );
             $text = array(
                 'title' => "",		//显示标题
-                'description' => "回答错误, 垃圾.", // 显示内容
+                'description' => "回答错误, 垃圾.请说继续", // 显示内容
             );
             return build_skill_success_response($dkconfig, $speach, $text, false);
         }
