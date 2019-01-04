@@ -9,6 +9,7 @@ class GameCache
     public $prevTime;   // 上次处理时间
 
     public $csz_problem_index; // 问题序号
+    public $csz_score;          // 分数
 
     public function __construct($data)
     {
@@ -19,6 +20,7 @@ class GameCache
         $this->prevTime = isset($data->prevTime) ? $data->prevTime : 0;
 
         $this->csz_problem_index = isset($data->csz_problem_index) ? $data->csz_problem_index : 0;
+        $this->csz_score = isset($data->csz_score) ? $data->csz_score : 0;
     }
 
 }

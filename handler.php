@@ -213,8 +213,9 @@ function request($headers, $body)
     // TODO 基础校验, 认证是否是我们的技能
     
     
-    // TODO session数据提取
-	session_id($body_json->context->System->device->deviceId);
+	// TODO session数据提取
+	$key = md5($body_json->context->System->device->deviceId);
+	session_id($key);
 	session_start();
 	$cache_str = isset($_SESSION['cache']) ? $_SESSION['cache'] : "";
 	
