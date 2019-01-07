@@ -51,6 +51,7 @@ class CtGame extends Game
         $this->problem_index = -1;
         $this->problem_count = 0;
         $this->score = 0;
+
     }
 
     public function request()
@@ -60,7 +61,8 @@ class CtGame extends Game
             $this->skill->state = STATE_PLAYING;
             $this->gameState = GAMESTATE_CT_PLAY;
             // 先说明
-            $text = "答对一题+10分, 打错失败, 明白请继续";
+            $maxScore = get($this->userdata, "ctMaxScore", 0);
+            $text = "答对一题+10分(历史最高分数:" . $maxScore . "), 打错失败, 明白请继续";
             return $this->response(SkillRsp::Build($text, $text, false));
         }
         // 运行状态
@@ -99,20 +101,27 @@ class CtGame extends Game
         // 检测答案
         if ($problem["answer"] != ($selectIndex + 1)) {
             $this->skill->state = STATE_EXIT;
-            $text = "回答错误, 垃圾. 当前分数: " . $this->score . " 答对数: " . ($this->problem_count - 1) . ", 请继续.";
+            $maxScore = get($this->userdata, "ctMaxScore", 0);
+            $text = "回答错误, 垃圾. 当前分数: " . $this->score . "(历史最高: " . $maxScore . ") 答对数: " . ($this->problem_count - 1) . ", 请继续.";
             return $this->response(SkillRsp::Build("回答错误, 垃圾", $text, false));
         }
         // 回答正确 
         $this->problem_index = -1;  // 清除题目索引
         $this->score = $this->score + 10;
-        log_debug("answer ok: " . $this->score);
-
-        $text = "恭喜回答正确. 当前分数: " . $this->score . " 答对数: " . $this->problem_count . ", 请继续.";
-        return $this->response(SkillRsp::Build("恭喜回答正确", $text, false));
+        $this->updateToRank(0, $this->score, $this->problem_index);
         
+        // 最高分
+        $maxScore = get($this->userdata, "ctMaxScore", 0);
+        $maxScore = max($maxScore, $this->score);
+        $this->userdata["ctMaxScore"] = $maxScore;
+        log_debug("answer ok: " . $this->score . ' userdata: ' . json_encode($this->userdata));
+
+        $text = "恭喜回答正确. 当前分数: " . $this->score . "(历史最高分: " . $maxScore . ") 答对数: " . $this->problem_count . ", 请继续.";
+        return $this->response(SkillRsp::Build("恭喜回答正确", $text, false));
         // return $this->response(SkillRsp::Build("服务器运行中", "服务器运行中, 请继续.", false));
     }
     
+
     
     // 下个问题
     protected function nextProblem($problems, $problem_index)

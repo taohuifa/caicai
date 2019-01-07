@@ -8,6 +8,6 @@ class DisplayRenderTemplate extends Directive{
         $this->type = "Display.RenderTemplate";
 		$this->token = $body['token'];
         $this->template = new Template($body['template']);
-    }
+	}
 }
 ?>

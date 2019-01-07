@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__).'/'."../entity/AudioObj.php");
 require_once(dirname(__FILE__).'/'."../entity/ImageObj.php");
 require_once(dirname(__FILE__).'/'."../entity/TextContentObj.php");
+
 class Template{
 	public $type;
 	public $textContent;
@@ -34,6 +35,7 @@ class Template{
 		if(isset($body['listItems'])){
 			$this->listItems = $body['listItems'];
 		}
+		
     }
 }
 ?>

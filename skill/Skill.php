@@ -13,6 +13,10 @@ class Skill extends App
     const CACHE_TIMEOUT = 15;   // cache超时时间 15s
     protected $body;    // 请求数据对象
     protected $game;    // 游戏
+    protected $conn;    // mysql 连接
+
+    protected $sessionId;   // session Id
+    protected $userdata;    // 玩家数据(持久数据)
 
     // 技能状态(public属性才能打入json)
     public $state;  // 当前状态
@@ -48,8 +52,8 @@ class Skill extends App
         
         // session开始
         $deviceId = !empty($this->body->context->System->device->deviceId) ? $this->body->context->System->device->deviceId : 0;
-        $sessionId = md5($deviceId);
-        session_id($sessionId);
+        $this->sessionId = md5($deviceId);
+        session_id($this->sessionId);
         session_start();
         
         // cache记录
@@ -67,7 +71,32 @@ class Skill extends App
         
         // cache解析
         json_decode_object($this, $cache_str);
-
+        
+        // db 连接
+        $this->conn = $this->mysql_connect($this->config);
+        if (!$this->conn || $this->conn->connect_error) {    //判断是否成功连接上MySQL数据库
+            throw new Exception("数据库连接错误！mysql=" . $dbhost . ":" . $dbprot . "@" . $dbuser . "/" . $dbpwd . " dbname=" . $dbname);
+            return false;
+        }
+        
+        // db 读取
+        $dbdata = null;
+        $sql = sprintf("SELECT `Data` FROM `t_u_userdata` WHERE `UserId`='%s' LIMIT 1", $this->sessionId);
+        $result = mysqli_query($this->conn, $sql);
+        if (!empty($result) && $result->num_rows > 0) {
+            // 输出每行数据
+            while ($row = $result->fetch_assoc()) {
+                $dbdata = $row["Data"];
+            }
+        } 
+        
+        // 检测数据
+        if (empty($dbdata)) {
+            $this->userdata = array();  // 新数据
+        } else {
+            $this->userdata = json_decode($dbdata, true);
+        }
+        
         // game 解析
         $game_str = !empty($_SESSION['game']) ? $_SESSION['game'] : "";
         if (!empty($game_str) && !empty($this->gameType)) {
@@ -75,16 +104,42 @@ class Skill extends App
             json_decode_object($this->game, $game_str);
         }
 
-        log_info("session: " . $sessionId . " cache: " . $cache_str . " game: " . $game_str);
+        log_info("session: " . $this->sessionId . " cache: " . $cache_str . " game: " . $game_str . " data: " . $dbdata);
 
         return true;
     }
 
+    // mysql连接
+    protected function mysql_connect($config)
+    {
+        $dbconfig = get($config, "mysql", array());
+        $dbhost = get($dbconfig, "host", "");
+        $dbport = get($dbconfig, "port", 3306);
+        $dbname = get($dbconfig, "dbname", "caicai");
+        $dbuser = get($dbconfig, "user", "root");
+        $dbpwd = get($dbconfig, "password", "admin");
+        $conn = new mysqli($dbhost, $dbuser, $dbpwd, $dbname, $dbport);
+        return $conn;
+    }
 
     protected function finish($result)
     {
         // 记录请求时间
         $this->prevTime = time();
+        
+        // mysql save
+        $dbdata = json_encode($this->userdata);
+        $sql = sprintf("REPLACE INTO t_u_userdata (UserId, `Data`, UpdateTime) VALUES ('%s', '%s', %d)", $this->sessionId, $dbdata, time());
+        log_debug("save userdata: " . $dbdata . " sql=" . $sql);
+        if (!($this->conn->query($sql) === true)) {
+            log_error("save mysql fail! sql=" . $sql . " error=" . $this->conn->error);
+        }
+            
+        // close mysql
+        if (!empty($this->conn)) {
+            mysqli_close($this->conn);
+            $this->conn = null;
+        }
         
         // session game保存
         if (!empty($this->game)) {
@@ -95,6 +150,7 @@ class Skill extends App
         // session cache保存
         $cache_str = json_encode($this);
         $_SESSION['cache'] = $cache_str;
+
 
         parent::finish($result);
     }
@@ -113,9 +169,13 @@ class Skill extends App
     // 请求操作
     protected function request()
     {
+        // 访问次数
+        $rcount = get($this->userdata, "rcount", 0);
+        $this->userdata["rcount"] = $rcount + 1;
+        
+        // 退出请求
         $request_type = $this->body->request->type;
         // echo "request_type: $request_type";
-        // 退出请求
         if ($request_type == "SessionEndedRequest" || Language::checkExitInput($this->body->request)) {
             // session 断开
             $this->state = STATE_NULL;
@@ -175,9 +235,28 @@ class Skill extends App
         return $this->response(SkillRsp::Build("猜一猜测试", "猜一猜测试", true));
     }
 
+    // sessionId
+    public function getSessionId()
+    {
+        return $this->sessionId;
+    }
+    
+    // 玩家持久数据
+    public function &getUserData()
+    {
+        return $this->userdata;
+    }
+
+    // 请求数据体
     public function getBody()
     {
         return $this->body;
+    }
+    
+    // mysql conn
+    public function getConn()
+    {
+        return $this->conn;
     }
 };
 

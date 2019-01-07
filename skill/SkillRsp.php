@@ -59,7 +59,6 @@ class SkillRsp
             )
         );
         $directiveCfg["token"] = self::get_token();
-
         $displayDirective = new DisplayRenderTemplate($directiveCfg);
         unset($displayDirective->template->backgroundAudio);
         unset($displayDirective->template->url);
