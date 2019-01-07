@@ -14,7 +14,7 @@ $config["mysql"] = array(
 // log配置
 $config["log"] = array(
     "path" => "./logs/",
-    "level" => 1,
+    "level" => 0,
 );
 
 ?>

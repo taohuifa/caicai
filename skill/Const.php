@@ -1,5 +1,7 @@
 <?php
 
+
+
 // 游戏状态
 define("STATE_NULL", 0);    // 无状态
 define("STATE_SELECT", 1);   // 选择模式
@@ -12,16 +14,16 @@ define("GAMESTATE_NULL", 0);    // 无状态
 
 // 游戏类型
 define("GAMETYPE_NULL", 0);
-define("GAMETYPE_CSZ", 1);    // 猜数字
+define("GAMETYPE_CT", 1);    // 猜题
 
 
 // 游戏常量
 class GameConst
 {
-    public static $GAMETYPE_NAMES = array("猜数字");// 游戏类型名数组
+    public static $GAMETYPE_NAMES = array("猜题");// 游戏类型名数组
+    
+    
+};
 
-}
 
 ?>
-
-
