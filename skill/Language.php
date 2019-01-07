@@ -46,8 +46,17 @@ class Language
     // 检测选择题, 返回选项[0~N], -1为无
     public static function checkSelectInput($request, $count)
     {
+        $noNames = array("一", "二", "三", "四", "五", "六", "七");
+        // 遍历选项
         for ($i = 0; $i < $count; $i++) {
-            $itemTexts = array("第" . ($i + 1) . "个", "" . ($i + 1), "选" . ($i + 1));
+            $itemTexts = array(
+                "第" . ($i + 1) . "个",
+                "" . ($i + 1),
+                "选" . ($i + 1),
+                "第" . $noNames[$i] . "个", $noNames[$i],
+                "选" . $noNames[$i],
+            );
+
             log_debug("check select input: " . $i . " " . $request->queryText . " -> " . json_encode($itemTexts));
             $index = self::checkInputByTexts($request->queryText, $itemTexts);
             if ($index >= 0) {
