@@ -3,8 +3,8 @@
 <head>
 <style>
 	body{
-		width:1280px;
-		height:800px;
+		width:940px;
+		height:400px;
 		background-color:#dede84;
 		font-size:15px;
 	}
