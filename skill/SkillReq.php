@@ -13,7 +13,7 @@ class SkillReq
     public $session;
     public $context;
     public $request;
-
+    
     // 请求解析
     public function __construct($context)
     {

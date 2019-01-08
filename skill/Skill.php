@@ -5,7 +5,9 @@ require_once "SkillReq.php";
 require_once "SkillRsp.php";
 require_once "Language.php";
 require_once "Game.php";
+require_once "UserData.php";
 require_once "ct/CtGame.php";
+
 
 // 叮当技能
 class Skill extends App
@@ -90,12 +92,12 @@ class Skill extends App
             }
         } 
         
-        // 检测数据
-        if (empty($dbdata)) {
-            $this->userdata = array();  // 新数据
-        } else {
-            $this->userdata = json_decode($dbdata, true);
-        }
+        // 解析userdata
+        $this->userdata = new UserData($this->sessionId);  // 新数据
+        if (!empty($dbdata)) {
+            $userdata_str = urldecode($dbdata);
+            json_decode_object($this->userdata, $userdata_str);
+        } 
         
         // game 解析
         $game_str = !empty($_SESSION['game']) ? $_SESSION['game'] : "";
@@ -128,9 +130,9 @@ class Skill extends App
         $this->prevTime = time();
         
         // mysql save
-        $dbdata = json_encode($this->userdata);
-        $sql = sprintf("REPLACE INTO t_u_userdata (UserId, `Data`, UpdateTime) VALUES ('%s', '%s', %d)", $this->sessionId, $dbdata, time());
-        log_debug("save userdata: " . $dbdata . " sql=" . $sql);
+        $userdata_str = urlencode(json_encode($this->userdata));
+        $sql = sprintf("REPLACE INTO t_u_userdata (UserId, `Data`, UpdateTime) VALUES ('%s', '%s', %d)", $this->sessionId, $userdata_str, time());
+        log_debug("save userdata: " . $userdata_str . " sql=" . $sql);
         if (!($this->conn->query($sql) === true)) {
             log_error("save mysql fail! sql=" . $sql . " error=" . $this->conn->error);
         }
@@ -170,8 +172,7 @@ class Skill extends App
     protected function request()
     {
         // 访问次数
-        $rcount = get($this->userdata, "rcount", 0);
-        $this->userdata["rcount"] = $rcount + 1;
+        $this->userdata->rcount = $this->userdata->rcount + 1;
         
         // 退出请求
         $request_type = $this->body->request->type;
@@ -242,7 +243,7 @@ class Skill extends App
     }
     
     // 玩家持久数据
-    public function &getUserData()
+    public function getUserData()
     {
         return $this->userdata;
     }
