@@ -27,6 +27,7 @@ class SkillRsp
      */
     public static function BuildH5($voice, $url, $shouldEndSession = true)
     {
+        log_debug("build h5 " . $url);
         $reponse = array();
         $reponse['outputSpeech'] = new OutputSpeech(array(
             "type" => "PlainText",

@@ -20,9 +20,28 @@ function get($obj, $key, $default)
     return $default;
 }
 
+// 输出堆栈
+function print_stack_trace()
+{
+    $array = debug_backtrace();
+    //print_r($array);//信息很齐全
+    unset($array[0]);
+    $html = "";
+    foreach ($array as $row) {
+        // $html .= $row['file'] . ':' . $row['line'] . '行,调用方法:' . $row['function'] . "<p>";
+        $html .= $row['file'] . ':' . $row['line'] . '行,调用方法:' . $row['function'] . "\r\n";
+    }
+    return $html;
+}
+
 // 解析反射写入对象
 function json_decode_object($obj, $json)
 {
+    // 判断对象
+    if (empty($obj)) {
+        error_log("empty obj! \r\n" . print_stack_trace());
+        return false;
+    }
     // 解析json数据
     $jobj = json_decode($json);
     // var_dump($json);

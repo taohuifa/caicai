@@ -14,13 +14,14 @@ define("GAMESTATE_NULL", 0);    // 无状态
 
 // 游戏类型
 define("GAMETYPE_NULL", 0);
-define("GAMETYPE_CT", 1);    // 猜题
+define("GAMETYPE_CT", 1);    // 猜题游戏
+define("GAMETYPE_DT", 2);    // 答题游戏
 
 
 // 游戏常量
 class GameConst
 {
-    public static $GAMETYPE_NAMES = array("猜题");// 游戏类型名数组
+    public static $GAMETYPE_NAMES = array("猜题", "答题");// 游戏类型名数组
     
     
 };

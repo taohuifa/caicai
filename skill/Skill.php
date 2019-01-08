@@ -6,7 +6,10 @@ require_once "SkillRsp.php";
 require_once "Language.php";
 require_once "Game.php";
 require_once "UserData.php";
+
+
 require_once "ct/CtGame.php";
+require_once "dt/DtGame.php";
 
 
 // 叮当技能
@@ -103,25 +106,16 @@ class Skill extends App
         $game_str = !empty($_SESSION['game']) ? $_SESSION['game'] : "";
         if (!empty($game_str) && !empty($this->gameType)) {
             $this->game = $this->createGame($this->gameType);
+            if (empty($this->game)) {
+                log_error("create game fail! type=" . $this->gameType);
+                return false;
+            }
             json_decode_object($this->game, $game_str);
         }
 
         log_info("session: " . $this->sessionId . " cache: " . $cache_str . " game: " . $game_str . " data: " . $dbdata);
 
         return true;
-    }
-
-    // mysql连接
-    protected function mysql_connect($config)
-    {
-        $dbconfig = get($config, "mysql", array());
-        $dbhost = get($dbconfig, "host", "");
-        $dbport = get($dbconfig, "port", 3306);
-        $dbname = get($dbconfig, "dbname", "caicai");
-        $dbuser = get($dbconfig, "user", "root");
-        $dbpwd = get($dbconfig, "password", "admin");
-        $conn = new mysqli($dbhost, $dbuser, $dbpwd, $dbname, $dbport);
-        return $conn;
     }
 
     protected function finish($result)
@@ -157,15 +151,51 @@ class Skill extends App
         parent::finish($result);
     }
     
+    // mysql连接
+    protected function mysql_connect($config)
+    {
+        $dbconfig = get($config, "mysql", array());
+        $dbhost = get($dbconfig, "host", "");
+        $dbport = get($dbconfig, "port", 3306);
+        $dbname = get($dbconfig, "dbname", "caicai");
+        $dbuser = get($dbconfig, "user", "root");
+        $dbpwd = get($dbconfig, "password", "admin");
+        $conn = new mysqli($dbhost, $dbuser, $dbpwd, $dbname, $dbport);
+        return $conn;
+    }
+
     // 游戏请求
     protected function createGame($gameType)
     {
         if ($gameType == GAMETYPE_CT) {
             return new CtGame($this, $gameType);
+        } else if ($gameType == GAMETYPE_DT) {
+            return new DtGame($this, $gameType);
         }
 
         // return new Game($this, $gameType);
         return null;
+    }
+    
+    // 请求开始游戏
+    protected function requestOnSelectGame($gameType)
+    {
+        // 检测状态
+        if ($this->state == STATE_START && $this->gameType == $gameType) {
+            log_error("state and gametype is same! ");
+            return $this->response(SkillRsp::Build(Language::AppError_Voice, Language::AppError_Text, true));
+        }
+        log_info("select game type: " . $gameType);
+
+        $this->gameType = $gameType;
+        $this->state = STATE_START;	// 标记为开始状态
+        $this->game = $this->createGame($this->gameType);
+        if ($this->game == null) {
+            log_error("create game by type fail! type=" . $this->gameType);
+            return $this->response(SkillRsp::Build(Language::AppError_Voice, Language::AppError_Text, true));
+        }
+
+        return $this->game->request();
     }
     
     // 请求操作
@@ -180,10 +210,21 @@ class Skill extends App
         if ($request_type == "SessionEndedRequest" || Language::checkExitInput($this->body->request)) {
             // session 断开
             $this->state = STATE_NULL;
+            $this->gameType = GAMETYPE_NULL;
             return $this->response(SkillRsp::Build(Language::GameExit_Voice, Language::GameExit_Text, true));
         }
     
-        // 正常访问
+        // 指定游戏模式
+        // $setGameType = GAMETYPE_NULL; // 不指定
+        $setGameType = GAMETYPE_DT; // 指定玩答题
+        if ($setGameType != GAMETYPE_NULL  //
+        && ($this->state == STATE_NULL //
+        || $this->state == STATE_SELECT //
+        || $this->state == STATE_EXIT  //
+        )) {
+            return $this->requestOnSelectGame($setGameType);
+        }
+        
         // 根据状态判断
         if ($this->state == STATE_NULL || $this->state == STATE_EXIT) {
             $this->state = STATE_SELECT;	//标记为选择状态
@@ -210,16 +251,7 @@ class Skill extends App
             log_debug("change state 3");
 			
 			// 选择成功
-            $this->gameType = $selectIndex + 1; //模式 1~N
-            $this->state = STATE_START;	// 标记为开始状态
-            $this->game = $this->createGame($this->gameType);
-            if ($this->game == null) {
-                log_error("create game by type fail! type=" . $this->gameType);
-                return $this->response(SkillRsp::Build(Language::AppError_Voice, Language::AppError_Text, true));
-            }
-            
-            // return request_game_hander($this->body, $this->gameType, $request_type, $this);
-            return $this->game->request();
+            return $this->requestOnSelectGame($selectIndex + 1); //模式 1~N
         } else {
 			// 开始游戏/游戏中/结束游戏状态
 			// 判断游戏模式

@@ -5,7 +5,7 @@ require_once dirname(__FILE__) . '/' . "Directive.php";
 class UrlOpen extends Directive
 {
 	public $token;
-	public $template;
+	// public $template;
 	public $url;
 	public $type;
 	public $destinationName;
@@ -16,7 +16,7 @@ class UrlOpen extends Directive
 		$this->token = $body['token'];
 		$this->url = $url;
 		$this->destinationName = "destinationName";
-		$this->template = null;
+		// $this->template = null;
 	}
 }
 
