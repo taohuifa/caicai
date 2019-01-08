@@ -9,7 +9,7 @@ error_reporting(-1);                    // 打印出所有的 错误信息
 ini_set('error_log', dirname(__FILE__) . '/logs/error_log.txt'); // 将出错信息输出到一个文本
 // echo dirname(__FILE__) . '/logs/error_log.txt';
 
-require_once "Config.php";
+require_once "config.php";
 require_once "App.php";
 require_once "skill/Skill.php";
 

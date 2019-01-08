@@ -1,12 +1,13 @@
 <?php
 
-require_once "Config.php";
+require_once "config.php";
 
 class MysqlApi
 {
 	private $mysqli;
 	public function __construct()
 	{
+        global $config;
 		$hostname = $config['mysql']["host"];
 		$port = 3306;
 		$username = $config['mysql']["user"];
