@@ -59,13 +59,13 @@ function build_slot_elicit_failed_response($config, $speech, $slot_name, $update
 	$directiveCfg2 = $config['successDirective'];
 	$directiveCfg2["token"] = get_token();
 	$displayDirective2 = new DisplayRenderTemplate($directiveCfg2);
-	unset($displayDirective2->template->backgroundAudio);
-	unset($displayDirective2->template->url);
-	unset($displayDirective2->template->listItems);
-	unset($displayDirective2->template->backgroundImage->contentDescription);
-	if (!empty($outText)) {
-		$displayDirective2->template->textContent = new TextContentObj($outText);
-	}
+	//unset($displayDirective2->template->backgroundAudio);
+	//unset($displayDirective2->template->url);
+	//unset($displayDirective2->template->listItems);
+	//unset($displayDirective2->template->backgroundImage->contentDescription);
+	//if (!empty($outText)) {
+	//	$displayDirective2->template->textContent = new TextContentObj($outText);
+	//}
 
 	$rsp->add_direvtives($displayDirective);
 	$rsp->add_direvtives($displayDirective2);
