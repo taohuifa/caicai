@@ -30,7 +30,7 @@ class Language
             log_debug("select list:" . $i . " " . $selectText);
             // 格式化拼接
             $str = sprintf($selectItemFormat, ($i + 1), $selectText);
-            $text = $text . $str;
+            $text = $text . " ". $str;
         }
         return $text;
     }               

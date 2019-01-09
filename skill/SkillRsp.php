@@ -4,6 +4,7 @@ require_once dirname(__FILE__) . '/' . "tsk/response/Response.php";
 require_once dirname(__FILE__) . '/' . "tsk/response/OutputSpeech.php";
 require_once dirname(__FILE__) . '/' . "tsk/directive/DisplayRenderTemplate.php";
 require_once dirname(__FILE__) . '/' . "tsk/directive/DialogElicitSlot.php";
+require_once dirname(__FILE__) . '/' . "tsk/directive/UrlOpen.php";
 require_once dirname(__FILE__) . '/' . "tsk/entity/TextContentObj.php";
 
 // 技能回复
@@ -18,6 +19,38 @@ class SkillRsp
     }
 
     /**
+     * H5页面结果
+     * @param voice 语音文本
+     * @param description 文字文本
+     * 
+     * 
+     */
+    public static function BuildH5($voice, $url, $shouldEndSession = true)
+    {
+        log_debug("build h5 " . $url);
+        $reponse = array();
+        $reponse['outputSpeech'] = new OutputSpeech(array(
+            "type" => "PlainText",
+            "text" => $voice,
+        ));
+        $reponse['shouldEndSession'] = $shouldEndSession;
+
+        $skillBody = new SkillRsp();
+        $rsp = new Response($reponse);
+        
+        // 输出模板
+        $directiveCfg = array();
+        $directiveCfg["token"] = self::get_token();
+        
+        // 生成h5视图
+        $displayDirective = new UrlOpen($directiveCfg, $url);
+        $rsp->add_direvtives($displayDirective);
+        $skillBody->response = $rsp;
+        return $skillBody;
+    }
+
+    /**
+     * 页面结果
      * @param voice 语音文本
      * @param description 文字文本
      * 
@@ -25,12 +58,12 @@ class SkillRsp
      */
     public static function Build($voice, $description, $shouldEndSession = true)
     {
+        $reponse = array();
         $reponse['outputSpeech'] = new OutputSpeech(array(
             "type" => "PlainText",
             "text" => $voice,
         ));
         $reponse['shouldEndSession'] = $shouldEndSession;
-
 
         $skillBody = new SkillRsp();
         $rsp = new Response($reponse);
@@ -60,16 +93,16 @@ class SkillRsp
         );
         $directiveCfg["token"] = self::get_token();
         $displayDirective = new DisplayRenderTemplate($directiveCfg);
-        //unset($displayDirective->template->backgroundAudio);
-        //unset($displayDirective->template->url);
-        //unset($displayDirective->template->listItems);
-        //unset($displayDirective->template->backgroundImage->contentDescription);
-        //if (!empty($description)) {
-        //    $displayDirective->template->textContent = new TextContentObj(array(
-        //        'title' => "",		//显示标题
-        //        'description' => $description, // 显示内容
-        //    ));
-        //}
+        unset($displayDirective->template->backgroundAudio);
+        unset($displayDirective->template->url);
+        unset($displayDirective->template->listItems);
+        unset($displayDirective->template->backgroundImage->contentDescription);
+        if (!empty($description)) {
+            $displayDirective->template->textContent = new TextContentObj(array(
+                'title' => "",		//显示标题
+                'description' => $description, // 显示内容
+            ));
+        }
 
         $rsp->add_direvtives($displayDirective);
         $skillBody->response = $rsp;

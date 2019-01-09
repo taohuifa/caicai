@@ -21,10 +21,10 @@ class Game
         $this->gameState = GAMESTATE_NULL;
 
         $this->body = $skill->getBody();
-        $this->userdata = &$skill->getUserData();
+        $this->userdata = $skill->getUserData();
         $this->conn = $skill->getConn();
         $this->sessionId = $skill->getSessionId();
-        
+
         log_debug("userdata by game: " . json_encode($this->userdata));
     }
 
