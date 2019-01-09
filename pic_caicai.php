@@ -77,7 +77,7 @@
 		}
 		if(!is_null($show))
 		{
-			printf("<div class='div_img'><img src='./res/%s_%s.jpg'/></div>",$result[0]["pic_prefix"],$show);
+			printf("<div class='div_img'><img src='./res/%s_%s.png'/></div>",$result[0]["pic_prefix"],$show);
 			continue;
 		}
 		
@@ -93,12 +93,12 @@
 		}
 		if(!is_null($show))
 		{
-			printf("<div class='div_img'><img src='./res/%s_%s.jpg'/></div>",$result[0]["pic_prefix"],$show);
+			printf("<div class='div_img'><img src='./res/%s_%s.png'/></div>",$result[0]["pic_prefix"],$show);
 			continue;
 		}
 		
 		//div
-		printf("<div></div>");
+		printf("<div class='div_img'></div>");
 	}
 ?>
 </center>
