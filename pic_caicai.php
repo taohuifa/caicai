@@ -6,10 +6,17 @@
 	$id=$_GET["id"];
 	$step=intval($_GET["step"]);
 	
-	$sql = "select * from pic_caicai where id=".$id;
 	$mysqlapi = new MysqlApi();
-	$result = $mysqlapi->query($sql);
+	$tiezhi_count = 0;
+	$tiezhi_sql = sprintf("select count(*) as total from tiezhi_caicai where sessionid='%s'",$_GET["sessionid"]);
+	$result = $mysqlapi->query($tiezhi_sql);
+	if(isset($result))
+	{
+		$tiezhi_count = $result[0]["total"];
+	}
 	
+	$sql = "select * from pic_caicai where id=".$id;
+	$result = $mysqlapi->query($sql);
 	$pic_total = intval($result[0]["pic_total"]);
 	$column = 0;
 	if($pic_total === 9)
@@ -48,7 +55,7 @@
 		background-color: #08879a;
 		padding: 5px;
 		text-align: center;
-		color: white;
+		color: yellow;
 		font-weight: bold;
 		width: 862px;
 	}
@@ -56,8 +63,7 @@
 </head>
 <body>
 <div class="div_head">
-<span>总贴纸：10</span>
-<span>本次已获得：1</span>
+<span>总贴纸：<?php echo $tiezhi_count; ?></span>
 </div>
 <center style>
 <?php
