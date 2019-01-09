@@ -3,8 +3,8 @@
 <head>
 <style>
 	body{
-		width:940px;
-		height:400px;
+		width:1280px;
+		height:800px;
 		background-color:#dede84;
 		font-size:15px;
 	}
@@ -17,6 +17,15 @@
 		color:#3e1f2d;
 		font-size:20px;
 	}
+	.div_head {
+		margin-bottom: 5px;
+		background-color: #08879a;
+		padding: 5px;
+		text-align: center;
+		color: yellow;
+		font-weight: bold;
+		width: 100%;
+	}
 </style>
 </head>
 <body>
@@ -25,11 +34,23 @@
 	$id=$_GET["id"];
 	$step=intval($_GET["step"]);
 	
-	$sql = "select * from word_caicai where id=".$id;
 	$mysqlapi = new MysqlApi();
+	
+	$tiezhi_count = 0;
+	$tiezhi_sql = sprintf("select count(*) as total from tiezhi_caicai where sessionid='%s'",$_GET["sessionid"]);
+	$result = $mysqlapi->query($tiezhi_sql);
+	if(isset($result))
+	{
+		$tiezhi_count = $result[0]["total"];
+	}
+	
+	$sql = "select * from word_caicai where id=".$id;
 	$result = $mysqlapi->query($sql);
 	//var_dump($result);
 ?>
+<div class="div_head">
+<span>总贴纸：<?php echo $tiezhi_count; ?></span>
+</div>
 <center>
 <div class="word_div">
 <h2><?php echo $result[0]["content"]; ?></h2>
