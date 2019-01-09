@@ -5,6 +5,7 @@ require_once "framework/uitls/file.php";
 require_once "framework/uitls/http.php";
 // require_once dirname(__FILE__).'/'."framework/utils/json.php";
 require_once "framework/component/log.php";
+require_once "mysql_api.php";
 
 require_once "skill/Skill.php";
 
