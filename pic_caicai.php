@@ -25,22 +25,41 @@
 	body{
 		width:940px;
 		height:400px;
+		padding-top:10px;
+		padding-left:30px;
 	}
-	div {
-		width:<?php echo ceil(920/$column); ?>px;
-		height:<?php echo ceil(380/$column); ?>px;
+	.div_img {
+		width:<?php echo ceil(850/$column); ?>px;
+		height:<?php echo ceil(430/$column); ?>px;
 		padding:2px;
 		border:solid 1px blue;
 		display:inline-block;
 		float:left;
 	}
 	img {
-		width:<?php echo ceil(920/$column - 5); ?>px;
-		height:<?php echo ceil(380/$column - 5); ?>px;
+		width:<?php echo ceil(850/$column - 5); ?>px;
+		height:<?php echo ceil(430/$column - 5); ?>px;
+	}
+	span {
+		margin-right:50px;
+	}
+	.div_head {
+		margin-bottom: 5px;
+		background-color: #08879a;
+		padding: 5px;
+		text-align: center;
+		color: white;
+		font-weight: bold;
+		width: 862px;
 	}
 </style>
 </head>
 <body>
+<div class="div_head">
+<span>总贴纸：10</span>
+<span>本次已获得：1</span>
+</div>
+<center style>
 <?php
 	$first_show = split(',',$result[0]["first_show"]);
 	for($i = 0; $i < $pic_total; ++$i)
@@ -58,7 +77,7 @@
 		}
 		if(!is_null($show))
 		{
-			printf("<div><img src='./res/%s_%s.jpg'/></div>",$result[0]["pic_prefix"],$show);
+			printf("<div class='div_img'><img src='./res/%s_%s.jpg'/></div>",$result[0]["pic_prefix"],$show);
 			continue;
 		}
 		
@@ -74,7 +93,7 @@
 		}
 		if(!is_null($show))
 		{
-			printf("<div><img src='./res/%s_%s.jpg'/></div>",$result[0]["pic_prefix"],$show);
+			printf("<div class='div_img'><img src='./res/%s_%s.jpg'/></div>",$result[0]["pic_prefix"],$show);
 			continue;
 		}
 		
@@ -82,7 +101,6 @@
 		printf("<div></div>");
 	}
 ?>
-<center>
 </center>
 </body>
 </html>
