@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<?php header("Content-Type: text/html;charset=utf-8"); ?>
 <style>
 	body{
 		width:1280px;

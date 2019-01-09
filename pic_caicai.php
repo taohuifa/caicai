@@ -2,6 +2,7 @@
 <html>
 <head>
 <?php
+	header("Content-Type: text/html;charset=utf-8");
 	require_once("./mysql_api.php");
 	$id=$_GET["id"];
 	$step=intval($_GET["step"]);
