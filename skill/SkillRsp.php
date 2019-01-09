@@ -18,6 +18,8 @@ class SkillRsp
         $this->version = "1.0";
     }
 
+    
+    
     /**
      * H5页面结果
      * @param voice 语音文本
