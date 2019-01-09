@@ -67,44 +67,47 @@ class SkillRsp
 
         $skillBody = new SkillRsp();
         $rsp = new Response($reponse);
-        
-        // 输出模板
-        $directiveCfg = array(
-            "type" => "Display.RenderTemplate",
-            "template" => array(
-                "type" => "NewsBodyTemplate1",
-                "textContent" => array(
-                    "title" => "",
-                    "description" => "猜一猜测试"
-                ),
-                "backgroundImage" => array(
-                    "contentDescription" => "string",
-                    "source" => array(
-                        "url" => "http://softimtt.myapp.com/browser/smart_service/ugc_skill/skill_demo_fangdai.jpg"
-                    )
-                ),
-                "backgroundAudio" => array(
-                    "source" => array(
-                        "url" => "string"
-                    )
-                ),
-                "url" => "string"
-            )
-        );
-        $directiveCfg["token"] = self::get_token();
-        $displayDirective = new DisplayRenderTemplate($directiveCfg);
-        unset($displayDirective->template->backgroundAudio);
-        unset($displayDirective->template->url);
-        unset($displayDirective->template->listItems);
-        unset($displayDirective->template->backgroundImage->contentDescription);
+
+        // 文本输出
         if (!empty($description)) {
+            // 输出模板
+            $directiveCfg = array(
+                "type" => "Display.RenderTemplate",
+                "template" => array(
+                    "type" => "NewsBodyTemplate1",
+                    "textContent" => array(
+                        "title" => "",
+                        "description" => "猜一猜测试"
+                    ),
+                    "backgroundImage" => array(
+                        "contentDescription" => "string",
+                        "source" => array(
+                            "url" => "http://softimtt.myapp.com/browser/smart_service/ugc_skill/skill_demo_fangdai.jpg"
+                        )
+                    ),
+                    "backgroundAudio" => array(
+                        "source" => array(
+                            "url" => "string"
+                        )
+                    ),
+                    "url" => "string"
+                )
+            );
+            $directiveCfg["token"] = self::get_token();
+            $displayDirective = new DisplayRenderTemplate($directiveCfg);
+            unset($displayDirective->template->backgroundAudio);
+            unset($displayDirective->template->url);
+            unset($displayDirective->template->listItems);
+            unset($displayDirective->template->backgroundImage->contentDescription);
             $displayDirective->template->textContent = new TextContentObj(array(
                 'title' => "",		//显示标题
                 'description' => $description, // 显示内容
             ));
+            
+            // 添加展现视图
+            $rsp->add_direvtives($displayDirective);
         }
 
-        $rsp->add_direvtives($displayDirective);
         $skillBody->response = $rsp;
         return $skillBody;
     }

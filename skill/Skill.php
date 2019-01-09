@@ -77,6 +77,7 @@ class Skill extends App
         // cache解析
         json_decode_object($this, $cache_str);
         
+        log_debug("mysql connect");
         // db 连接
         $this->conn = $this->mysql_connect($this->config);
         if (!$this->conn || $this->conn->connect_error) {    //判断是否成功连接上MySQL数据库
@@ -194,8 +195,9 @@ class Skill extends App
             log_error("create game by type fail! type=" . $this->gameType);
             return $this->response(SkillRsp::Build(Language::AppError_Voice, Language::AppError_Text, true));
         }
-
-        return $this->game->request();
+        // 执行游戏开始第一次调用
+        $result = $this->game->request();
+        return $result;
     }
     
     // 请求操作
@@ -203,6 +205,7 @@ class Skill extends App
     {
         // 访问次数
         $this->userdata->rcount = $this->userdata->rcount + 1;
+        log_debug("test3");
         
         // 退出请求
         $request_type = $this->body->request->type;
@@ -213,6 +216,7 @@ class Skill extends App
             $this->gameType = GAMETYPE_NULL;
             return $this->response(SkillRsp::Build(Language::GameExit_Voice, Language::GameExit_Text, true));
         }
+        log_debug("test2");
     
         // 指定游戏模式
         // $setGameType = GAMETYPE_NULL; // 不指定
@@ -224,6 +228,7 @@ class Skill extends App
         )) {
             return $this->requestOnSelectGame($setGameType);
         }
+        log_debug("test1");
         
         // 根据状态判断
         if ($this->state == STATE_NULL || $this->state == STATE_EXIT) {
@@ -253,6 +258,7 @@ class Skill extends App
 			// 选择成功
             return $this->requestOnSelectGame($selectIndex + 1); //模式 1~N
         } else {
+            log_debug("state :" . $this->state);
 			// 开始游戏/游戏中/结束游戏状态
 			// 判断游戏模式
             if (empty($this->game)) {
