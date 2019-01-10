@@ -26,7 +26,11 @@
 <?php 
 	$i = 0;
 	$iNext = 0;
-	$total =count($result); 
+	$total = 0;
+	if(isset($result))
+	{
+		$total =count($result); 
+	}
 	//$total = 50;
 	while($i <= $total)
 	{
