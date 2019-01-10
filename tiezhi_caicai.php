@@ -9,6 +9,10 @@
 		font-size:15px;
 	}
 	table,table tr th, table tr td { border:1px solid #0094ff;border-collapse: collapse;}
+	img {
+		width:100px;
+		height:130px;
+	}
 </style>
 </head>
 <body>
@@ -39,7 +43,7 @@
 			printf("<tr>");
 			$iNext = $i + 5;
 		}
-		printf("<td><img src='./res/tiezhi_%d.png' /></td>",rand(1,7));
+		printf("<td><img src='./res/tiezhi_%d.png' /></td>",rand(1,16));
 		$i++;
 		if($i == $iNext)
 		{
