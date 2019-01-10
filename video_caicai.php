@@ -34,11 +34,11 @@
 <h2><?php echo $result[0]["content"]; ?></h2>
 
 <?php 
-	$i = $step;
+	$i = $step+1;
 	while($i >0)
 	{
         printf("<span class='word_prompt' style='font-weight:bold;padding-top:20px'>提示（%d/%d）</span>",$i,$result[0]["video_total"]);
-		printf("<img src='https://blog.chiyl.info/caicai/res/%s' /><br>",$result[0]["video_".$i]);
+		printf("<img height='448' width='800' src='https://blog.chiyl.info/caicai/res/%s' /><br>",$result[0]["video_".$i]);
 		$i--;
 	}
 ?>
