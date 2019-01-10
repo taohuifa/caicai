@@ -9,6 +9,10 @@
 		font-size:15px;
 	}
 	table,table tr th, table tr td { border:1px solid #0094ff;border-collapse: collapse;}
+	img {
+		width:100px;
+		height:130px;
+	}
 </style>
 </head>
 <body>
@@ -26,16 +30,20 @@
 <?php 
 	$i = 0;
 	$iNext = 0;
-	$total =count($result); 
-	$total = 50;
+	$total = 0;
+	if(isset($result))
+	{
+		$total =count($result); 
+	}
+	//$total = 50;
 	while($i <= $total)
 	{
-		if($i % 5 == 0)
+		if($i % 8 == 0)
 		{
 			printf("<tr>");
-			$iNext = $i + 5;
+			$iNext = $i + 8;
 		}
-		printf("<td><img src='./res/tiezhi_%d.png' /></td>",rand(1,7));
+		printf("<td><img src='./res/tiezhi_%d.png' /></td>",rand(1,16));
 		$i++;
 		if($i == $iNext)
 		{
