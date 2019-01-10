@@ -107,6 +107,11 @@ class DtGame extends Game
         // if (preg_match($pattern, $queryText) > 0) {
         //     return true;
         // }
+            
+        // 检测是否包括
+        if (strpos($queryText, $answer, 0) != false) {
+            return true;
+        }
         
         // 关键字检测
         $itemTexts = array(
