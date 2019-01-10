@@ -34,6 +34,24 @@ class DtGame extends Game
 
     }
 
+    
+    // 图文
+    public function BuildH5View($voice, $description, $shouldEndSession = true)
+    {
+        // https://blog.chiyl.info/caicai/word_caicai.php?id=1004&step=1&sessionid=abc
+
+        $url = "https://blog.chiyl.info/caicai/word_caicai.php?id=" . $this->problem_index . "&step=" . $this->tips_count . "&sessionid=" . $this->sessionId;
+        log_info("url: " . $url);
+        return SkillRsp::BuildH5($voice, $url, $shouldEndSession);
+    }
+    
+    // 添加贴纸记录
+    protected function AddTieZhiToSql($problem_type, $problem_id)
+    {
+        $sql = "insert into `tiezhi_caicai` ( `sessionid`, `ques_id`, `ques_type`) values ('" . $this->sessionId . "', " . $problem_id . ", '" . $problem_type . "')";
+        $this->mysql->update($sql);
+    }
+
     public function request()
     {
         log_debug("dtgame request: " . $this->skill->state);
@@ -43,6 +61,7 @@ class DtGame extends Game
             $this->gameState = GAMESTATE_DT_PLAY;
             // 先说明
             return $this->response(SkillRsp::Build(DtLanguage::GameStart_Text, DtLanguage::GameStart_Voice, false));
+            // return $this->response($this->BuildH5View(DtLanguage::GameStart_Text, DtLanguage::GameStart_Voice, false));
         }
         log_debug("dt test 1");
         // 提取问题
@@ -81,11 +100,13 @@ class DtGame extends Game
             // 转成提示
             $this->tips_count++;
             $pstr = $problem["prompt_" . $this->tips_count];
-            return $this->response(SkillRsp::Build($pstr, null, false));
+            // return $this->response(SkillRsp::Build($pstr, null, false));
+            return $this->response($this->BuildH5View($pstr, null, false));
         }
         
         // 下一题
         log_debug("answer success! " . $this->problem_type . " " . $this->problem_index);
+        $this->AddTieZhiToSql($this->problem_type, $this->problem_index);
         return $this->nextProblem("回答正确, 下一题.", "");
         // return $this->response(SkillRsp::BuildH5("你好", "https://blog.chiyl.info/caicai/word_caicai.php?id=2&step=2", false));
     }
@@ -227,7 +248,8 @@ class DtGame extends Game
         // 生成问题
         // $text = self::getProblemSelectText($problem);
         // log_debug("csz_next_problem 1 " . $text);
-        return $this->response(SkillRsp::Build($prevOutSpeech . $problem["outspeech"], $prevText . $problem["content"], false));
+        // return $this->response(SkillRsp::Build($prevOutSpeech . $problem["outspeech"], $prevText . $problem["content"], false));
+        return $this->response($this->BuildH5View($prevOutSpeech . $problem["outspeech"], $prevText . $problem["content"], false));
     }
 
 }
