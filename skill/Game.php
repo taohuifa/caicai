@@ -49,6 +49,36 @@ class Game
         }
         return true;
     }
+    
+    // 获取排名
+    public function getRankCount($rankType)
+    {
+        $sql = "select count(*) from t_u_rank";
+        $result = $this->mysql->query_once($sql);
+        if (empty($results)) {
+            return 0;
+        }
+        return (!empty($result["count(*)"])) ? $result["count(*)"] : 0;
+    }
+    
+    
+    // 获取排名
+    public function getRankIndex($rankType)
+    {
+        $sql = "select * from t_u_rank ORDER BY ScoreA DESC, ScoreB DESC, ScoreC DESC";
+        $results = $this->mysql->query($sql);
+        if (empty($results)) {
+            return -1;
+        }
+        // 遍历检测ID
+        for ($i = 0; $i < count($results); $i++) {
+            $rank = $results[$i];
+            if ($this->sessionId == $rank["UserId"]) {
+                return $i;
+            }
+        }
+        return -1;
+    }
 
     public function request()
     {

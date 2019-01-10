@@ -22,6 +22,45 @@ class DtLanguage
         }
         return false;
     }
+    
+    
+    
+    // 检测是否打开贴纸提示意图
+    public static function checkOpenTieZhiInput($request)
+    {
+        // 判断是否带意图
+        if ($request->type == "IntentRequest") {
+            if ($request->intent->name == "tips") {
+                return true;
+            }
+        }
+
+        $itemTexts = array(
+            "打开贴纸",
+            "打开我的贴纸",
+            "打开帖子",
+        );
+        $index = Language::checkInputByTexts($request->queryText, $itemTexts);
+        if ($index >= 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    // 检测是否继续意图
+    public static function checkJiXuInput($request)
+    {
+        $itemTexts = array(
+            "继续",
+            "刷新",
+            "再说一遍",
+        );
+        $index = Language::checkInputByTexts($request->queryText, $itemTexts);
+        if ($index >= 0) {
+            return true;
+        }
+        return false;
+    }
 };
 
 
