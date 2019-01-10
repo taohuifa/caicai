@@ -7,7 +7,7 @@
 		width:1280px;
 		height:800px;
 		background-color:#dede84;
-		font-size:15px;
+		font-size:20px;
 	}
 	.word_div {
 		text-align:left;
@@ -16,7 +16,7 @@
 	}
 	.word_prompt {
 		color:#3e1f2d;
-		font-size:20px;
+		font-size:25px;
 	}
 	.div_head {
 		margin-bottom: 5px;
@@ -54,8 +54,8 @@
 </div>
 <center>
 <div class="word_div">
-<h2><?php echo $result[0]["content"]; ?></h2>
-<span class="word_prompt" style="font-weight:bold;padding-top:20px">提示（<?php printf("%d/%d",$step,$result[0]["prompt_total"]); ?>）：</span>
+<h2 style="font-size:30px;"><?php echo $result[0]["content"]; ?></h2>
+<span class="word_prompt" style="font-weight:bold;padding-top:25px">提示（<?php printf("%d/%d",$step,$result[0]["prompt_total"]); ?>）：</span>
 <ul>
 <?php 
 	$i = 1;
