@@ -27,7 +27,7 @@
 	$i = 0;
 	$iNext = 0;
 	$total =count($result); 
-	$total = 50;
+	//$total = 50;
 	while($i <= $total)
 	{
 		if($i % 5 == 0)
