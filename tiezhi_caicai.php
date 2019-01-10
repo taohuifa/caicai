@@ -38,10 +38,10 @@
 	//$total = 50;
 	while($i <= $total)
 	{
-		if($i % 5 == 0)
+		if($i % 8 == 0)
 		{
 			printf("<tr>");
-			$iNext = $i + 5;
+			$iNext = $i + 8;
 		}
 		printf("<td><img src='./res/tiezhi_%d.png' /></td>",rand(1,16));
 		$i++;
