@@ -15,7 +15,7 @@ class Language
 
     const AppError_Voice = "服务器打了个盹, 不好意思. ";
     const AppError_Text = "服务器打了个盹, 不好意思. ";
-    
+
     const GameNoTip_Voice = "没有提示了";
     
     // 创建游戏选择文本
@@ -73,12 +73,12 @@ class Language
     public static function checkStartInput($request)
     {
         // 判断是否带意图
-        if ($request->type == "IntentRequest") {
-            if ($request->intent->name == "start_game" ||
-                $request->intent->name == "again") {
-                return true;
-            }
-        }
+        // if ($request->type == "IntentRequest") {
+        //     if ($request->intent->name == "start_game" ||
+        //         $request->intent->name == "again") {
+        //         return true;
+        //     }
+        // }
         
         // 文字检测
         $exitTexts = array("打开牛逼猜一猜", "我想玩牛逼猜一猜");
@@ -104,7 +104,7 @@ class Language
     public static function checkInputByTexts($text, $texts)
     {
         foreach ($texts as $key => $value) {
-            log_debug("check input: " . $key . " " . $text . " -> " . json_encode($value));
+            log_debug("check input: $key $text ->  $value");
             if ($text == $value) {
                 return $key;
             }

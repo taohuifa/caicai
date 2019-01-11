@@ -94,8 +94,28 @@ class DtGame extends Game
     }
     
     // 检测答案
+    protected function checkAnswers($queryText, $answerText)
+    {
+        // 多答案处理
+        $answers = explode(',', $answerText);
+        if (empty($answers)) {
+            log_error("no awaers: $answerText");
+            return false;   // 没有答案
+        }
+        
+        // 遍历答案
+        for ($i = 0; $i < count($answers); $i++) {
+            if ($this->checkAnswer($queryText, $answers[$i])) {
+                return true;    // 符合答案
+            }
+        }
+        return false;
+    }
+    
+    // 检测答案
     protected function checkAnswer($queryText, $answer)
     {
+        log_debug("checkAnswer: $queryText -> $answer");
         // 全文检测
         if ($queryText == $answer) {
             return true;
@@ -178,7 +198,7 @@ class DtGame extends Game
         
         // 检测答案
         log_debug("answer : " . $this->body->request->queryText);
-        if (!$this->checkAnswer($this->body->request->queryText, $problem["answer"])) {
+        if (!$this->checkAnswers($this->body->request->queryText, $problem["answer"])) {
             $isNeedTips = DtLanguage::checkNeedTipInput($this->body->request);
             
             // 检测提示数
