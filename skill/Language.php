@@ -7,8 +7,10 @@ class Language
     const GameStart_Voice = "请问想玩什么游戏?  ";
     const GameStart_Text = "请问想玩什么游戏?  ";
 
-    const GameExit_Voice = "再见少年，我已拉黑你了。";
-    const GameExit_Text = "再见少年，什么人啊。";
+    // const GameExit_Voice = "再见少年，我已拉黑你了。";
+    // const GameExit_Text = "再见少年，什么人啊。";
+    const GameExit_Voice = "谢谢参与，想我的时候记得叫我.";
+    const GameExit_Text = "谢谢参与，想我的时候记得叫我.";
 
     const GameUnknow_Voice = "对不起, 我不是很理解你说什么. ";
     const GameUnknow_Text = "对不起, 我不是很理解你说什么. ";
@@ -73,15 +75,15 @@ class Language
     public static function checkStartInput($request)
     {
         // 判断是否带意图
-        // if ($request->type == "IntentRequest") {
-        //     if ($request->intent->name == "start_game" ||
-        //         $request->intent->name == "again") {
-        //         return true;
-        //     }
-        // }
+        if ($request->type == "IntentRequest") {
+            // if ($request->intent->name == "start_game" ||
+            //     $request->intent->name == "again") {
+            //     return true;
+            // }
+        }
         
         // 文字检测
-        $exitTexts = array("打开牛逼猜一猜", "我想玩牛逼猜一猜");
+        $exitTexts = array("打开牛逼猜一猜", "我想玩牛逼猜一猜", "重新开始", "重来", "从来");
         return self::checkInputByTexts($request->queryText, $exitTexts) >= 0;
     }
     
