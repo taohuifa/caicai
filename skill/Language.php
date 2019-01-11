@@ -7,14 +7,18 @@ class Language
     const GameStart_Voice = "请问想玩什么游戏?  ";
     const GameStart_Text = "请问想玩什么游戏?  ";
 
-    const GameExit_Voice = "再见少年，我已拉黑你了。";
-    const GameExit_Text = "再见少年，什么人啊。";
+    // const GameExit_Voice = "再见少年，我已拉黑你了。";
+    // const GameExit_Text = "再见少年，什么人啊。";
+    const GameExit_Voice = "谢谢参与，想我的时候记得叫我.";
+    const GameExit_Text = "谢谢参与，想我的时候记得叫我.";
 
     const GameUnknow_Voice = "对不起, 我不是很理解你说什么. ";
     const GameUnknow_Text = "对不起, 我不是很理解你说什么. ";
 
     const AppError_Voice = "服务器打了个盹, 不好意思. ";
     const AppError_Text = "服务器打了个盹, 不好意思. ";
+
+    const GameNoTip_Voice = "没有提示了";
     
     // 创建游戏选择文本
     public static function createGameSelectText($selectTexts, $selectItemFormat = "第%d个是%s")
@@ -30,7 +34,7 @@ class Language
             log_debug("select list:" . $i . " " . $selectText);
             // 格式化拼接
             $str = sprintf($selectItemFormat, ($i + 1), $selectText);
-            $text = $text . " ". $str;
+            $text = $text . " " . $str;
         }
         return $text;
     }               
@@ -67,9 +71,33 @@ class Language
         return -1;
     }
     
+    // 检测开始游戏意图
+    public static function checkStartInput($request)
+    {
+        // 判断是否带意图
+        if ($request->type == "IntentRequest") {
+            // if ($request->intent->name == "start_game" ||
+            //     $request->intent->name == "again") {
+            //     return true;
+            // }
+        }
+        
+        // 文字检测
+        $exitTexts = array("打开牛逼猜一猜", "我想玩牛逼猜一猜", "重新开始", "重来", "从来");
+        return self::checkInputByTexts($request->queryText, $exitTexts) >= 0;
+    }
+    
     // 检测退出意图
     public static function checkExitInput($request)
     {
+        // 判断是否带意图
+        if ($request->type == "IntentRequest") {
+            if ($request->intent->name == "exit_game") {
+                return true;    // 是退出意图
+            }
+        }
+        
+        // 文字检测
         $exitTexts = array("不玩了", "退出", "不想玩了");
         return self::checkInputByTexts($request->queryText, $exitTexts) >= 0;
     }
@@ -78,7 +106,7 @@ class Language
     public static function checkInputByTexts($text, $texts)
     {
         foreach ($texts as $key => $value) {
-            log_debug("check input: " . $key . " " . $text . " -> " . json_encode($value));
+            log_debug("check input: $key $text ->  $value");
             if ($text == $value) {
                 return $key;
             }

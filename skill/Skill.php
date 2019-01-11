@@ -76,7 +76,7 @@ class Skill extends App
         
         // cache解析
         json_decode_object($this, $cache_str);
-        
+
         log_debug("mysql connect");
         // db 连接
         $this->conn = $this->mysql_connect($this->config);
@@ -215,6 +215,11 @@ class Skill extends App
             $this->state = STATE_NULL;
             $this->gameType = GAMETYPE_NULL;
             return $this->response(SkillRsp::Build(Language::GameExit_Voice, Language::GameExit_Text, true));
+        } else if (Language::checkStartInput($this->body->request)) {
+            $this->state = STATE_NULL;
+            $this->gameType = GAMETYPE_NULL;
+            $this->gameState = GAMESTATE_NULL;
+            $this->game = null;
         }
         log_debug("test2");
     

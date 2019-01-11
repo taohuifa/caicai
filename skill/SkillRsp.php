@@ -84,7 +84,8 @@ class SkillRsp
                     "backgroundImage" => array(
                         "contentDescription" => "string",
                         "source" => array(
-                            "url" => "http://softimtt.myapp.com/browser/smart_service/ugc_skill/skill_demo_fangdai.jpg"
+                            // "url" => "http://softimtt.myapp.com/browser/smart_service/ugc_skill/skill_demo_fangdai.jpg"
+                            "url" => "https://blog.chiyl.info/caicai/res/caicai_bg.jpg"
                         )
                     ),
                     "backgroundAudio" => array(

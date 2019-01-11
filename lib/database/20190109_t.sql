@@ -39,14 +39,14 @@ CREATE TABLE `pic_caicai` (
 -- ----------------------------
 -- Records of pic_caicai
 -- ----------------------------
-INSERT INTO `pic_caicai` VALUES ('0', '9', 'bwl', '0,2,3,5,7', '4', '1', '4', '6', '8', '', '', '霸王龙', '猜猜这只恐龙叫什么名字');
-INSERT INTO `pic_caicai` VALUES ('1', '9', 'ledi', '2,5,6,8', '5', '1', '3', '4', '7', '0', '', '乐迪', '猜猜这个超级飞侠的名称');
-INSERT INTO `pic_caicai` VALUES ('3', '4', 'change', '2', '2', '1', '0', '', '', '', '', '嫦娥', '猜一个女性神话人物');
-INSERT INTO `pic_caicai` VALUES ('4', '9', 'lanyangyang', '0,1,2,3,5,', '4', '6', '8', '4', '7', '', '', '懒羊羊', '猜猜这是羊村里面的谁');
-INSERT INTO `pic_caicai` VALUES ('5', '4', 'china', '1', '2', '0', '2', '', '', '', '', '中国', '猜这是哪个国家');
-INSERT INTO `pic_caicai` VALUES ('6', '4', 'GrassCarp', '1', '2', '0', '2', '', '', '', '', '草鱼', '猜这是什么鱼');
-INSERT INTO `pic_caicai` VALUES ('8', '9', 'xionger', '0,2,3,5,6', '4', '7', '8', '4', '1', '', '', '熊二', '猜猜这是谁');
-INSERT INTO `pic_caicai` VALUES ('10', '9', 'jijiguowang', '0,1,2,3,6', '4', '5', '8', '4', '7', '', '', '吉吉国王', '猜猜这是森林里面的谁');
+INSERT INTO `pic_caicai` VALUES ('3001', '9', 'bwl', '0,2,3,5,7', '4', '1', '4', '6', '8', '', '', '霸王龙', '猜猜这只恐龙叫什么名字');
+INSERT INTO `pic_caicai` VALUES ('3002', '9', 'ledi', '2,5,6,8', '5', '1', '3', '4', '7', '0', '', '乐迪', '猜猜这个超级飞侠的名称');
+INSERT INTO `pic_caicai` VALUES ('3003', '4', 'change', '2', '2', '1', '0', '', '', '', '', '嫦娥', '猜一个女性神话人物');
+INSERT INTO `pic_caicai` VALUES ('3004', '9', 'lanyangyang', '0,1,2,3,5,', '4', '6', '8', '4', '7', '', '', '懒羊羊', '猜猜这是羊村里面的谁');
+INSERT INTO `pic_caicai` VALUES ('3005', '4', 'china', '1', '2', '0', '2', '', '', '', '', '中国', '猜这是哪个国家');
+INSERT INTO `pic_caicai` VALUES ('3006', '4', 'GrassCarp', '1', '2', '0', '2', '', '', '', '', '草鱼', '猜这是什么鱼');
+INSERT INTO `pic_caicai` VALUES ('3007', '9', 'xionger', '0,2,3,5,6', '4', '7', '8', '4', '1', '', '', '熊二', '猜猜这是谁');
+INSERT INTO `pic_caicai` VALUES ('3008', '9', 'jijiguowang', '0,1,2,3,6', '4', '5', '8', '4', '7', '', '', '吉吉国王', '猜猜这是森林里面的谁');
 
 -- ----------------------------
 -- Table structure for t_u_rank
@@ -125,7 +125,7 @@ CREATE TABLE `video_caicai` (
 -- ----------------------------
 -- Records of video_caicai
 -- ----------------------------
-INSERT INTO `video_caicai` VALUES ('1', '猜一猜这是什么动物', '3', 'video1.gif', 'video1_tips2.png', 'video1_tips1.png', '', '', '', '斑马', '猜一猜这是什么动物');
+INSERT INTO `video_caicai` VALUES ('2001', '猜一猜这是什么动物', '3', 'video1.gif', 'video1_tips2.png', 'video1_tips1.png', '', '', '', '斑马', '猜一猜这是什么动物');
 
 -- ----------------------------
 -- Table structure for word_caicai
