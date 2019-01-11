@@ -18,8 +18,8 @@ class SkillRsp
         $this->version = "1.0";
     }
 
-    
-    
+
+
     /**
      * H5页面结果
      * @param voice 语音文本
@@ -58,7 +58,7 @@ class SkillRsp
      * 
      * 
      */
-    public static function Build($voice, $description, $shouldEndSession = true)
+    public static function Build($voice, $description, $shouldEndSession = true, $url = null)
     {
         $reponse = array();
         $reponse['outputSpeech'] = new OutputSpeech(array(
@@ -70,6 +70,12 @@ class SkillRsp
         $skillBody = new SkillRsp();
         $rsp = new Response($reponse);
 
+        if ($url == null) {
+            // "url" => "http://softimtt.myapp.com/browser/smart_service/ugc_skill/skill_demo_fangdai.jpg"
+            // "url" => "https://blog.chiyl.info/caicai/res/caicai_bg.jpg"
+            $url = "https://blog.chiyl.info/caicai/res/caicai_bg.jpg?r=" . rand(0, 100);
+        }
+        
         // 文本输出
         if (!empty($description)) {
             // 输出模板
@@ -84,8 +90,7 @@ class SkillRsp
                     "backgroundImage" => array(
                         "contentDescription" => "string",
                         "source" => array(
-                            // "url" => "http://softimtt.myapp.com/browser/smart_service/ugc_skill/skill_demo_fangdai.jpg"
-                            "url" => "https://blog.chiyl.info/caicai/res/caicai_bg.jpg"
+                            "url" => $url,
                         )
                     ),
                     "backgroundAudio" => array(

@@ -185,6 +185,7 @@ class Skill extends App
         if ($this->state == STATE_START && $this->gameType == $gameType) {
             log_error("state and gametype is same! ");
             return $this->response(SkillRsp::Build(Language::AppError_Voice, Language::AppError_Text, true));
+            
         }
         log_info("select game type: " . $gameType);
 
@@ -214,7 +215,10 @@ class Skill extends App
             // session 断开
             $this->state = STATE_NULL;
             $this->gameType = GAMETYPE_NULL;
-            return $this->response(SkillRsp::Build(Language::GameExit_Voice, Language::GameExit_Text, true));
+            // return $this->response(SkillRsp::Build(Language::GameExit_Voice, Language::GameExit_Text, true));
+            $url = "https://blog.chiyl.info/caicai/res/caicai_end.jpg?r=" . rand(0, 100);
+            return $this->response(SkillRsp::Build(Language::GameExit_Voice, " ", true, $url));
+            
         } else if (Language::checkStartInput($this->body->request)) {
             $this->state = STATE_NULL;
             $this->gameType = GAMETYPE_NULL;

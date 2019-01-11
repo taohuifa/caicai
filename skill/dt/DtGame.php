@@ -47,17 +47,17 @@ class DtGame extends Game
         $url = "";
         $voice = $prevOutSpeech . $problem["outspeech"];
         if ($this->problem_type == PROBLEM_TYPE_WORD) {
-            $url = "https://blog.chiyl.info/caicai/word_caicai.php?id=" . $this->problem_index . "&step=" . $this->tips_count . "&sessionid=" . $this->sessionId;
+            $url = "https://blog.chiyl.info/caicai/word_caicai.php?id=" . $this->problem_index . "&step=" . $this->tips_count . "&sessionid=" . $this->sessionId . "&r=" . rand(0, 100);
             if ($istip) {
                 $voice = $problem["prompt_" . $this->tips_count];
             }
         } else if ($this->problem_type == PROBLEM_TYPE_PIC) {
-            $url = "https://blog.chiyl.info/caicai/pic_caicai.php?id=" . $this->problem_index . "&step=" . $this->tips_count . "&sessionid=" . $this->sessionId;
+            $url = "https://blog.chiyl.info/caicai/pic_caicai.php?id=" . $this->problem_index . "&step=" . $this->tips_count . "&sessionid=" . $this->sessionId . "&r=" . rand(0, 100);
             if ($istip) {
                 $voice = "再给你个提示";
             }
         } else if ($this->problem_type == PROBLEM_TYPE_VIDEO) {
-            $url = "https://blog.chiyl.info/caicai/video_caicai.php?id=" . $this->problem_index . "&step=" . $this->tips_count . "&sessionid=" . $this->sessionId;
+            $url = "https://blog.chiyl.info/caicai/video_caicai.php?id=" . $this->problem_index . "&step=" . $this->tips_count . "&sessionid=" . $this->sessionId . "&r=" . rand(0, 100);
             if ($istip) {
                 $voice = "再给你个提示";
             }
@@ -164,7 +164,9 @@ class DtGame extends Game
             $this->skill->state = STATE_PLAYING;
             $this->gameState = GAMESTATE_DT_PLAY;
             // 先说明
-            return $this->response(SkillRsp::Build(DtLanguage::GameStart_Text, DtLanguage::GameStart_Voice, false));
+            // return $this->response(SkillRsp::Build(DtLanguage::GameStart_Voice, DtLanguage::GameStart_Text, false));
+            $url = "https://blog.chiyl.info/caicai/res/caicai.jpg?r=" . rand(0, 100);
+            return $this->response(SkillRsp::Build(DtLanguage::GameStart_Voice, " ", false, $url));
         }
         log_debug("dt test 1");
         // 提取问题
@@ -327,17 +329,51 @@ class DtGame extends Game
         // return array("id" => $problem_id, "type" => $problem_type);
         
         // $problem_type_start = rand(PROBLEM_TYPE_WORD, PROBLEM_COUNT);
-        $problem_type_start = 1 + ($this->problem_count % PROBLEM_COUNT);
-        for ($i = 0; $i < PROBLEM_COUNT; $i++) {
-            $problem_type = 1 + ($problem_type_start + $i) % PROBLEM_COUNT;
-            $problem_id = $this->getRandProblemId($problem_type);
-            log_debug("get t=$problem_type id=$problem_id");
-            if ($problem_id <= 0) {
-                continue;   // 下个题库试试
-            }
-            return array("id" => $problem_id, "type" => $problem_type);
+        
+        
+        // $problem_type_start = 1 + ($this->problem_count % PROBLEM_COUNT);
+        // for ($i = 0; $i < PROBLEM_COUNT; $i++) {
+        //     $problem_type = 1 + ($problem_type_start + $i) % PROBLEM_COUNT;
+        //     $problem_id = $this->getRandProblemId($problem_type);
+        //     log_debug("get t=$problem_type id=$problem_id");
+        //     if ($problem_id <= 0) {
+        //         continue;   // 下个题库试试
+        //     }
+        //     return array("id" => $problem_id, "type" => $problem_type);
+        // }
+        // return array("id" => 0, "type" => 0);
+
+        $problems = array(
+            array("id" => 2002, "type" => PROBLEM_TYPE_VIDEO),
+            array("id" => 1001, "type" => PROBLEM_TYPE_WORD),
+            array("id" => 3001, "type" => PROBLEM_TYPE_PIC),
+            array("id" => 2001, "type" => PROBLEM_TYPE_VIDEO),
+            array("id" => 1002, "type" => PROBLEM_TYPE_WORD),
+            array("id" => 3002, "type" => PROBLEM_TYPE_PIC),
+            array("id" => 2007, "type" => PROBLEM_TYPE_VIDEO),
+            array("id" => 1003, "type" => PROBLEM_TYPE_WORD),
+            array("id" => 3003, "type" => PROBLEM_TYPE_PIC),
+            array("id" => 2004, "type" => PROBLEM_TYPE_VIDEO),
+            array("id" => 1004, "type" => PROBLEM_TYPE_WORD),
+            array("id" => 3004, "type" => PROBLEM_TYPE_PIC),
+            array("id" => 2005, "type" => PROBLEM_TYPE_VIDEO),
+            array("id" => 1005, "type" => PROBLEM_TYPE_WORD),
+            array("id" => 3005, "type" => PROBLEM_TYPE_PIC),
+            array("id" => 2006, "type" => PROBLEM_TYPE_VIDEO),
+            array("id" => 1006, "type" => PROBLEM_TYPE_WORD),
+            array("id" => 3006, "type" => PROBLEM_TYPE_PIC),
+            array("id" => 2003, "type" => PROBLEM_TYPE_VIDEO),
+            array("id" => 1007, "type" => PROBLEM_TYPE_WORD),
+            array("id" => 3007, "type" => PROBLEM_TYPE_PIC),
+            array("id" => 2008, "type" => PROBLEM_TYPE_VIDEO),
+            array("id" => 1008, "type" => PROBLEM_TYPE_WORD),
+            array("id" => 3008, "type" => PROBLEM_TYPE_PIC),
+            array("id" => 2009, "type" => PROBLEM_TYPE_VIDEO),
+        );
+        if ($this->problem_count >= count($problems)) {
+            return array("id" => 0, "type" => 0);   // 全部都出完了
         }
-        return array("id" => 0, "type" => 0);
+        return $problems[$this->problem_count];
     }
     
     // 完成游戏
