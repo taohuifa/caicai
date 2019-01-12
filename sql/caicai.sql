@@ -46,7 +46,7 @@ CREATE TABLE `pic_caicai` (
 
 LOCK TABLES `pic_caicai` WRITE;
 /*!40000 ALTER TABLE `pic_caicai` DISABLE KEYS */;
-INSERT INTO `pic_caicai` VALUES (0,9,'bwl','0,2,3,5,7',4,'1','4','6','8','','','霸王龙','猜猜这只恐龙叫什么名字'),(1,9,'ledi','2,5,6,8',5,'1','3','4','7','0','','乐迪','猜猜这个超级飞侠的名称'),(3,4,'change','2',2,'1','0','','','','','嫦娥','猜一个女性神话人物'),(4,9,'lanyangyang','0,1,2,3,5,',4,'6','8','4','7','','','懒羊羊','猜猜这是羊村里面的谁'),(5,4,'china','1',2,'0','2','','','','','中国','猜这是哪个国家'),(6,4,'GrassCarp','1',2,'0','2','','','','','草鱼','猜这是什么鱼'),(8,9,'xionger','0,2,3,5,6',4,'7','8','4','1','','','熊二','猜猜这是谁'),(10,9,'jijiguowang','0,1,2,3,6',4,'5','8','4','7','','','吉吉国王','猜猜这是森林里面的谁');
+INSERT INTO `pic_caicai` VALUES (3001,9,'bwl','0,2,3,5,7',4,'1','4','6','8','','','霸王龙','猜猜这只恐龙叫什么名字'),(3002,9,'ledi','2,5,6,8',5,'1','3','4','7','0','','乐迪','猜猜这个超级飞侠的名称'),(3003,4,'change','2',2,'1','0','','','','','嫦娥','猜一个女性神话人物'),(3004,9,'lanyangyang','0,1,2,3,5,',4,'6','8','4','7','','','懒羊羊','猜猜这是羊村里面的谁'),(3005,4,'china','1',2,'0','2','','','','','中国','猜这是哪个国家'),(3006,4,'GrassCarp','1',2,'0','2','','','','','草鱼','猜这是什么鱼'),(3007,9,'xionger','0,2,3,5,6',4,'7','8','4','1','','','熊二','猜猜这是谁'),(3008,9,'jijiguowang','0,1,2,3,6',4,'5','8','4','7','','','吉吉国王','猜猜这是森林里面的谁');
 /*!40000 ALTER TABLE `pic_caicai` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -75,7 +75,7 @@ CREATE TABLE `t_u_rank` (
 
 LOCK TABLES `t_u_rank` WRITE;
 /*!40000 ALTER TABLE `t_u_rank` DISABLE KEYS */;
-INSERT INTO `t_u_rank` VALUES ('cfcd208495d565ef66e7dff9f98764da',1,0,60,-1,0,1546972228);
+INSERT INTO `t_u_rank` VALUES ('24186d77ff9ed16438cc71b841b4b121',2,0,3,0,0,1547135003),('cfcd208495d565ef66e7dff9f98764da',1,0,60,-1,0,1546972228);
 /*!40000 ALTER TABLE `t_u_rank` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +100,7 @@ CREATE TABLE `t_u_userdata` (
 
 LOCK TABLES `t_u_userdata` WRITE;
 /*!40000 ALTER TABLE `t_u_userdata` DISABLE KEYS */;
-INSERT INTO `t_u_userdata` VALUES ('24186d77ff9ed16438cc71b841b4b121','%7B%22rcount%22%3A408%2C%22ctMaxScore%22%3A0%7D',1547048513),('407dd1153c132e09becc05181b4d1790','{\"rcount\":17}',1546888884),('cfcd208495d565ef66e7dff9f98764da','%7B%22rcount%22%3A191%2C%22ctMaxScore%22%3A60%7D',1547048244);
+INSERT INTO `t_u_userdata` VALUES ('24186d77ff9ed16438cc71b841b4b121','%7B%22rcount%22%3A603%2C%22ctMaxScore%22%3A0%7D',1547135036),('407dd1153c132e09becc05181b4d1790','{\"rcount\":17}',1546888884),('cfcd208495d565ef66e7dff9f98764da','%7B%22rcount%22%3A201%2C%22ctMaxScore%22%3A60%7D',1547133663);
 /*!40000 ALTER TABLE `t_u_userdata` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `tiezhi_caicai` (
   `ques_type` varchar(56) DEFAULT '',
   `right_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,6 +127,7 @@ CREATE TABLE `tiezhi_caicai` (
 
 LOCK TABLES `tiezhi_caicai` WRITE;
 /*!40000 ALTER TABLE `tiezhi_caicai` DISABLE KEYS */;
+INSERT INTO `tiezhi_caicai` VALUES (6,'cfcd208495d565ef66e7dff9f98764da',3002,'2',NULL),(7,'cfcd208495d565ef66e7dff9f98764da',3004,'2',NULL),(8,'24186d77ff9ed16438cc71b841b4b121',3008,'2',NULL),(9,'24186d77ff9ed16438cc71b841b4b121',3007,'2',NULL),(10,'24186d77ff9ed16438cc71b841b4b121',3003,'2',NULL),(11,'24186d77ff9ed16438cc71b841b4b121',3001,'2',NULL),(12,'24186d77ff9ed16438cc71b841b4b121',3005,'2',NULL),(13,'24186d77ff9ed16438cc71b841b4b121',3004,'2',NULL),(14,'24186d77ff9ed16438cc71b841b4b121',3006,'2',NULL),(15,'24186d77ff9ed16438cc71b841b4b121',3002,'2',NULL),(16,'24186d77ff9ed16438cc71b841b4b121',2001,'3',NULL),(17,'24186d77ff9ed16438cc71b841b4b121',1004,'1',NULL),(18,'24186d77ff9ed16438cc71b841b4b121',1003,'1',NULL),(19,'24186d77ff9ed16438cc71b841b4b121',1008,'1',NULL),(20,'24186d77ff9ed16438cc71b841b4b121',1007,'1',NULL),(21,'24186d77ff9ed16438cc71b841b4b121',1004,'1',NULL),(22,'24186d77ff9ed16438cc71b841b4b121',1007,'1',NULL),(23,'24186d77ff9ed16438cc71b841b4b121',3007,'2',NULL);
 /*!40000 ALTER TABLE `tiezhi_caicai` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +160,7 @@ CREATE TABLE `video_caicai` (
 
 LOCK TABLES `video_caicai` WRITE;
 /*!40000 ALTER TABLE `video_caicai` DISABLE KEYS */;
-INSERT INTO `video_caicai` VALUES (6,'猜一猜这是什么乐器',3,'video8.gif','video8_tips1.png','video8_tips8.png','','','','架子鼓','猜一猜这是什么乐器'),(8,'猜一猜这是什么运动',3,'video4.gif','video4_tips1.png','video4_tips4.png','','','','踢足球','猜一猜这是什么运动'),(5,'猜一猜这是什么动物',3,'video2.gif','video2_tips1.png','video2_tips2.png','','','','企鹅','猜一猜这是什么动物'),(1,'猜一猜这是什么动物',3,'video1.gif','video1_tips2.png','video1_tips1.png','','','','斑马','猜一猜这是什么动物'),(9,'猜一猜这里有几只动物',3,'video7.gif','video7_tips1.png','video7_tips2.png','','','','6只','猜一猜这里有几只动物'),(10,'猜一猜这里有几种动物',3,'video6.gif','video6_tips1.png','video6_tips2.png','','','','3种','猜一猜这里有几种动物'),(11,'猜一猜这是什么',3,'video5.gif','video5_tips1.png','video5_tips5.png','','','','飞机','猜一猜这是什么'),(12,'猜一猜这是什么车',3,'video9.gif','video9_tips1.png','video9_tips9.png','','','','自行车','猜一猜这是什么车');
+INSERT INTO `video_caicai` VALUES (2001,'猜一猜这是什么动物',3,'video1.gif','video1_tips2.png','video1_tips1.png','','','','斑马','猜一猜这是什么动物'),(2002,'猜一猜这是什么动物',3,'video2.gif','video2_tips1.png','video2_tips2.png','','','','企鹅','猜一猜这是什么动物'),(2003,'猜一猜这是什么乐器',3,'video8.gif','video8_tips1.png','video8_tips8.png','','','','架子鼓','猜一猜这是什么乐器'),(2005,'猜一猜这是什么运动',3,'video4.gif','video4_tips1.png','video4_tips4.png','','','','踢足球','猜一猜这是什么运动'),(2006,'猜一猜这里有几只动物',3,'video7.gif','video7_tips1.png','video7_tips2.png','','','','6只','猜一猜这里有几只动物'),(2007,'猜一猜这里有几只鸡',3,'video6.gif','video6_tips1.png','video6_tips2.png','','','','3只','猜一猜这里有几种动物'),(2008,'猜一猜这是什么',3,'video5.gif','video5_tips1.png','video5_tips5.png','','','','飞机','猜一猜这是什么'),(2009,'猜一猜这是什么车',3,'video9.gif','video9_tips1.png','video9_tips9.png','','','','自行车','猜一猜这是什么车'),(2004,'猜一猜这是什么天气',2,'video3.gif','video3_tips1.png','','','','','下雪天','猜一猜这是什么天气');
 /*!40000 ALTER TABLE `video_caicai` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,4 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-09 23:41:57
+-- Dump completed on 2019-01-10 23:44:01
